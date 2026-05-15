@@ -41,7 +41,6 @@
             letter-spacing: 1.5px;
             background: linear-gradient(135deg, #000 0%, #333 40%,#666 70%, #666 100%);
             background-size: 200% auto;
-            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -194,7 +193,7 @@
             content: '▹'; position: absolute; left: 0; color: #667eea; font-weight: bold; font-size: 1.2rem;
         }
 
-        /* Projects Section */
+        /* Projects Section - 4 Cards */
         .projects { padding: 80px 0; background: #f8f8f8; overflow: hidden; }
         .section-title {
             text-align: center; font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800;
@@ -221,6 +220,7 @@
         .projects-track::-webkit-scrollbar { display: none; }
         .projects-track:active { cursor: grabbing; }
         
+        /* Desktop: 3 cards visible, dengan 4 total cards */
         .project-card {
             min-width: calc(33.333% - 17px);
             max-width: calc(33.333% - 17px);
@@ -556,10 +556,35 @@
         <h2 class="section-title">Project <span>Saya</span></h2>
         <div class="projects-wrapper">
             <div class="projects-track" id="projectsTrack">
-                <div class="project-card"><img src="Cuplikan layar 2026-03-15 142306.png" alt="Project 1" class="project-image"><div class="project-info"><h3>E-Commerce Website</h3><p>Website e-commerce modern dengan fitur lengkap termasuk payment gateway.</p></div></div>
-                <div class="project-card"><img src="Cuplikan layar 2026-05-12 222928.png" alt="Project 2" class="project-image"><div class="project-info"><h3>Mobile App Design</h3><p>Desain aplikasi mobile untuk platform booking dengan UX intuitif.</p></div></div>
-                <div class="project-card"><img src="Cuplikan layar 2025-09-20 120904.png" alt="Project 3" class="project-image"><div class="project-info"><h3>Dashboard Analytics</h3><p>Dashboard interaktif untuk visualisasi data dengan real-time updates.</p></div></div>
-                <div class="project-card"><img src="Cuplikan layar 2025-09-20 120929.png" alt="Project 4" class="project-image"><div class="project-info"><h3>Social Media Platform</h3><p>Platform media sosial dengan fitur messaging dan community.</p></div></div>
+                <!-- 4 Project Cards Only -->
+                <div class="project-card">
+                    <img src="Cuplikan layar 2026-03-15 142306.png" alt="Project 1" class="project-image">
+                    <div class="project-info">
+                        <h3>E-Commerce Website</h3>
+                        <p>Website e-commerce modern dengan fitur lengkap termasuk payment gateway.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="Cuplikan layar 2026-05-12 222928.png" alt="Project 2" class="project-image">
+                    <div class="project-info">
+                        <h3>Mobile App Design</h3>
+                        <p>Desain aplikasi mobile untuk platform booking dengan UX intuitif.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="Cuplikan layar 2025-09-20 120904.png" alt="Project 3" class="project-image">
+                    <div class="project-info">
+                        <h3>Dashboard Analytics</h3>
+                        <p>Dashboard interaktif untuk visualisasi data dengan real-time updates.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="Cuplikan layar 2025-09-20 120929.png" alt="Project 4" class="project-image">
+                    <div class="project-info">
+                        <h3>Social Media Platform</h3>
+                        <p>Platform media sosial dengan fitur messaging dan community.</p>
+                    </div>
+                </div>
             </div>
             <div class="slider-controls">
                 <button class="slider-btn" id="prevBtn">←</button>
@@ -599,7 +624,7 @@
             e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
         }));
 
-        // Projects Slider - Tanpa dots
+        // Projects Slider - 4 Cards Only
         const track = document.getElementById('projectsTrack');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
@@ -613,16 +638,17 @@
 
         function getVisibleCards() {
             const width = window.innerWidth;
-            if (width <= 768) return 1;
-            if (width <= 1024) return 2;
-            return 3;
+            if (width <= 768) return 1;  // Mobile: 1 card
+            if (width <= 1024) return 2; // Tablet: 2 cards
+            return 3;                     // Desktop: 3 cards visible, 4 total
         }
 
         function getTotalCards() {
-            return track.querySelectorAll('.project-card').length;
+            return track.querySelectorAll('.project-card').length; // Returns 4
         }
 
         function getMaxIndex() {
+            // With 4 cards and 3 visible on desktop: max index = 4-3 = 1
             return Math.max(0, getTotalCards() - getVisibleCards());
         }
 
@@ -645,14 +671,14 @@
             currentIndex = safeIndex;
         }
 
-        // Auto Scroll
+        // Auto Scroll - 5 second interval
         function startAutoScroll() {
             stopAutoScroll();
             autoScrollTimer = setInterval(() => {
                 if (!isUserInteracting && !isDragging) {
                     let nextIndex = currentIndex + 1;
                     if (nextIndex > getMaxIndex()) {
-                        nextIndex = 0;
+                        nextIndex = 0; // Loop back to start
                     }
                     scrollToIndex(nextIndex);
                 }
